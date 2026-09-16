@@ -40,6 +40,20 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
+-- 트리거가 만들어지기 전에 가입한 계정을 채워 넣는다.
+-- (스키마보다 먼저 로그인해 본 경우가 여기 해당한다. 여러 번 실행해도 안전하다.)
+insert into public.profiles (id, display_name, avatar_url)
+select
+  u.id,
+  coalesce(
+    u.raw_user_meta_data ->> 'full_name',
+    u.raw_user_meta_data ->> 'name',
+    split_part(u.email, '@', 1)
+  ),
+  u.raw_user_meta_data ->> 'avatar_url'
+from auth.users u
+on conflict (id) do nothing;
+
 -- 관리자 여부 헬퍼 (RLS 정책이 profiles를 재귀 참조하지 않도록 security definer)
 create or replace function public.is_admin()
 returns boolean
