@@ -174,6 +174,11 @@ drop policy if exists profiles_update_own on public.profiles;
 create policy profiles_update_own on public.profiles for update
   using (id = auth.uid()) with check (id = auth.uid());
 
+-- 위 정책만으로는 본인 행의 is_admin을 스스로 true로 바꿀 수 있다.
+-- 컬럼 단위로 UPDATE 권한을 회수해 스스로 관리자가 되는 길을 막는다.
+-- (관리자 지정은 SQL Editor나 Table Editor에서만 한다.)
+revoke update (is_admin) on public.profiles from anon, authenticated;
+
 -- events: 누구나 조회, 관리자만 생성/수정/삭제
 drop policy if exists events_select on public.events;
 create policy events_select on public.events for select using (true);

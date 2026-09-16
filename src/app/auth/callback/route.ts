@@ -13,13 +13,32 @@ export async function GET(request: Request) {
     process.env.NEXT_PUBLIC_SITE_URL ??
     (forwardedHost ? `https://${forwardedHost}` : origin);
 
-  if (code) {
-    const supabase = await createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
-      return NextResponse.redirect(`${baseUrl}${next}`);
-    }
+  // Google이 거절한 경우 그 사유가 여기로 온다.
+  const oauthError = searchParams.get("error_description") ?? searchParams.get("error");
+  if (oauthError) {
+    console.error("[auth/callback] OAuth 제공자 오류:", oauthError);
+    return NextResponse.redirect(
+      `${baseUrl}/?auth_error=${encodeURIComponent(oauthError)}`,
+    );
   }
 
-  return NextResponse.redirect(`${baseUrl}/?auth_error=1`);
+  if (!code) {
+    console.error(
+      "[auth/callback] code 파라미터가 없습니다. query:",
+      searchParams.toString(),
+    );
+    return NextResponse.redirect(`${baseUrl}/?auth_error=no_code`);
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+  if (error) {
+    console.error("[auth/callback] 세션 교환 실패:", error.status, error.message);
+    return NextResponse.redirect(
+      `${baseUrl}/?auth_error=${encodeURIComponent(error.message)}`,
+    );
+  }
+
+  return NextResponse.redirect(`${baseUrl}${next}`);
 }
