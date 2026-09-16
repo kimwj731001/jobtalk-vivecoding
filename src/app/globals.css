@@ -1,0 +1,277 @@
+@import "tailwindcss";
+
+/* ══════════════════════════════════════════════════════════
+   잡담회 Brand Design System
+   출처: 잡담회 Brand Design System.html
+   ══════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Brand palette ── */
+  --color-indigo: #4d55b8;
+  --color-indigo-light: #7880d4;
+  --color-indigo-dark: #2f368a;
+  --color-pink: #e776af;
+  --color-pink-light: #f4a8ce;
+  --color-pink-dark: #c44e8a;
+  --color-orange: #f58f1d;
+  --color-orange-light: #fab96a;
+  --color-orange-dark: #c96d08;
+  --color-blue-pale: #c6e5fe;
+  --color-blue-pale-dark: #89c4f4;
+  --color-navy: #1a1b3a;
+  --color-navy-mid: #2d2e5a;
+
+  /* ── Surfaces ── */
+  --color-surface: #f7f8ff;
+  --color-surface-2: #edeffe;
+  --color-line: #e2e4f3;
+
+  /* ── Text ── */
+  --color-ink: #1a1b3a;
+  --color-ink-2: #6b6d8d;
+  --color-ink-3: #a8aabf;
+
+  /* ── Feedback ── */
+  --color-danger: #ff4757;
+  --color-success: #1c8a3c;
+
+  /* ── Radius ── */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-xl: 36px;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 2px 8px rgba(77, 85, 184, 0.08);
+  --shadow-md: 0 4px 20px rgba(77, 85, 184, 0.14);
+  --shadow-lg: 0 8px 40px rgba(77, 85, 184, 0.18);
+  --shadow-color: 0 6px 24px rgba(231, 118, 175, 0.24);
+
+  /* ── Fonts ── */
+  --font-sans: "Noto Sans KR", "DM Sans", sans-serif;
+  --font-display: "DM Sans", "Noto Sans KR", sans-serif;
+}
+
+:root {
+  color-scheme: light;
+
+  --grad-main: linear-gradient(135deg, #e776af 0%, #8b6fd4 50%, #4d55b8 100%);
+  --grad-warm: linear-gradient(135deg, #f58f1d 0%, #e776af 100%);
+  --grad-cool: linear-gradient(135deg, #4d55b8 0%, #c6e5fe 100%);
+  --grad-full: linear-gradient(
+    135deg,
+    #f58f1d 0%,
+    #e776af 40%,
+    #8b6fd4 70%,
+    #4d55b8 100%
+  );
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══════════════ Gradients ══════════════ */
+
+.bg-grad-main { background: var(--grad-main); }
+.bg-grad-warm { background: var(--grad-warm); }
+.bg-grad-cool { background: var(--grad-cool); }
+.bg-grad-full { background: var(--grad-full); }
+
+.text-grad-main {
+  background: var(--grad-main);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ══════════════ Typography scale ══════════════
+   Display 52/900/-2 · H1 36/800/-1.2 · H2 24/700/-0.6 · H3 18/700/-0.3
+   Body L 16/400 · Body M 14/400 · Caption 12/500 · Label 11/700/+1
+   모바일에서는 Display/H1을 한 단계 줄여 사용한다. */
+
+.type-display {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: -1.4px;
+  line-height: 1.15;
+}
+.type-h1 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.9px;
+  line-height: 1.25;
+}
+.type-h2 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.35;
+}
+.type-h3 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  line-height: 1.4;
+}
+.type-body-l { font-size: 16px; font-weight: 400; }
+.type-body-m { font-size: 14px; font-weight: 400; }
+.type-caption { font-size: 12px; font-weight: 500; }
+.type-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .type-display { font-size: 52px; letter-spacing: -2px; }
+  .type-h1 { font-size: 36px; letter-spacing: -1.2px; }
+  .type-h2 { font-size: 24px; letter-spacing: -0.6px; }
+  .type-h3 { font-size: 18px; }
+}
+
+/* ══════════════ Buttons ══════════════ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--grad-main);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(231, 118, 175, 0.3);
+}
+.btn-primary:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(231, 118, 175, 0.4);
+}
+
+.btn-secondary {
+  background: var(--color-surface-2);
+  color: var(--color-indigo);
+  border: 1.5px solid var(--color-line);
+}
+.btn-secondary:not(:disabled):hover { background: var(--color-line); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-indigo);
+  border: 1.5px solid var(--color-indigo);
+}
+.btn-outline:not(:disabled):hover {
+  background: var(--color-indigo);
+  color: #fff;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-ink-2);
+  border: 1.5px solid var(--color-line);
+}
+.btn-ghost:not(:disabled):hover {
+  border-color: var(--color-indigo);
+  color: var(--color-indigo);
+}
+
+.btn-sm { padding: 8px 16px; font-size: 12px; }
+.btn-lg { padding: 16px 32px; font-size: 16px; }
+
+/* ══════════════ Badges ══════════════ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-indigo { background: rgba(77, 85, 184, 0.1); color: var(--color-indigo); }
+.badge-pink { background: rgba(231, 118, 175, 0.1); color: var(--color-pink-dark); }
+.badge-orange { background: rgba(245, 143, 29, 0.1); color: var(--color-orange-dark); }
+.badge-green { background: rgba(52, 199, 89, 0.1); color: var(--color-success); }
+.badge-gray { background: var(--color-surface-2); color: var(--color-ink-2); }
+
+.badge-dot::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ══════════════ Inputs ══════════════ */
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-line);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--color-navy);
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input:focus {
+  border-color: var(--color-indigo);
+  box-shadow: 0 0 0 3px rgba(77, 85, 184, 0.1);
+}
+.input::placeholder { color: var(--color-ink-3); }
+.input[aria-invalid="true"] {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.08);
+}
+
+.input-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-ink-2);
+}
+.input-hint { font-size: 11px; color: var(--color-ink-3); }
+.input-hint-error { font-size: 11px; color: var(--color-danger); }
+
+/* ══════════════ Card ══════════════ */
+
+.card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-line);
+  overflow: hidden;
+}
+.card-hover { transition: transform 0.2s, box-shadow 0.2s; }
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ══════════════ Bubble icon (로고 말풍선) ══════════════ */
+
+.bubble-icon {
+  background: var(--grad-main);
+  border-radius: 50% 50% 50% 8px / 50% 50% 8px 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
