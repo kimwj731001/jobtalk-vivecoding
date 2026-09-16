@@ -32,8 +32,7 @@ export function SetupNotice() {
 
         <pre className="mt-6 bg-surface-2 rounded-[14px] p-4 type-caption overflow-x-auto font-display text-ink-2">
           {`NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...
-NEXT_PUBLIC_SITE_URL=http://localhost:3000`}
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...`}
         </pre>
       </div>
     </div>

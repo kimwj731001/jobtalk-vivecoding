@@ -44,7 +44,6 @@ Supabase 대시보드 → **SQL Editor**에서 [`supabase/migrations/0001_init.s
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOi...
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
 > `service_role` 키는 쓰지 않습니다. 권한은 전부 DB의 RLS 정책이 처리합니다.
@@ -64,7 +63,9 @@ http://localhost:3000 에서 확인합니다.
 
 ## 배포
 
-Vercel에 GitHub 저장소를 연결하고 위 환경변수 3개를 등록합니다. `NEXT_PUBLIC_SITE_URL`은 실제 배포 도메인으로 바꾸고, 그 주소의 `/auth/callback`을 Supabase Redirect URLs에도 추가해야 로그인이 동작합니다.
+Vercel에 GitHub 저장소를 연결하고 위 환경변수 **2개**를 등록합니다. 돌아올 주소는 요청 헤더에서 읽으므로 도메인을 환경변수로 넣을 필요가 없습니다.
+
+배포 후 [Supabase URL Configuration](https://supabase.com/dashboard/project/_/auth/url-configuration)에서 Site URL을 배포 도메인으로 바꾸고, Redirect URLs에 `https://<배포-도메인>/**`를 추가해야 로그인이 동작합니다. 로컬 개발을 계속한다면 `http://localhost:3000/**`도 함께 남겨둡니다.
 
 ## 구조
 

@@ -7,11 +7,14 @@ export async function GET(request: Request) {
   const code = searchParams.get("code");
   const next = searchParams.get("next") ?? "/";
 
-  // 배포 환경에서는 프록시 뒤라 origin이 내부 주소일 수 있다.
+  // 돌아갈 주소는 요청 헤더에서 직접 읽는다.
+  // 환경변수로 고정하면 배포 도메인이 바뀌거나 값이 틀렸을 때 엉뚱한 곳으로 튕긴다.
+  // 로컬에서는 x-forwarded-host가 없어 origin(localhost:3000)이 그대로 쓰인다.
   const forwardedHost = request.headers.get("x-forwarded-host");
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    (forwardedHost ? `https://${forwardedHost}` : origin);
+  const forwardedProto = request.headers.get("x-forwarded-proto") ?? "https";
+  const baseUrl = forwardedHost
+    ? `${forwardedProto}://${forwardedHost}`
+    : origin;
 
   // Google이 거절한 경우 그 사유가 여기로 온다.
   const oauthError = searchParams.get("error_description") ?? searchParams.get("error");
